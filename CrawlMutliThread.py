@@ -134,7 +134,6 @@ def getListingPages():
         time.sleep(_timeout)
         page = s.get(_baseLink, headers=_headers)
         if page.status_code == 200:
-            # return # for debugging purposes
             break
 
     soup = bs(page.content, 'html.parser')
@@ -157,7 +156,6 @@ def getListingPages():
         houseLinks = soup.findAll('a', class_='list-card-img')
         for hl in houseLinks:
             _listingQ.put(hl['href'])
-            return  # for debugging thread termination
         # the link for the next page can be found from an 'a' tag that has a title of 'Next page'
         nextBtn = soup.find('a', {'title': 'Next page'})
         prevHref = currHref
